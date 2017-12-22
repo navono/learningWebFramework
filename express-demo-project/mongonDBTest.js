@@ -17,48 +17,47 @@ db.once('open', function() {
 });
 
 
+// Create an instance of model Person
+const person_instance = new Person({
+  name: 'Nancy',
+  age: 18,
+  gender: 'Female'
+});
 
-// // Create an instance of model Person
-// const person_instance = new Person({
-//   name: 'Nancy',
-//   age: 18,
-//   gender: 'Female'
-// });
-
-// // Save the new model instance, passing a callback
-// person_instance.save(err => {
-//   if (err)
-//   {
-//     console.log(err);
-//     return;
-//   }
-//   console.log('Person data saved!');
-// });
-
-// // Or we can use create function
-// Person.create({
-//   name: 'John',
-//   age: 22,
-//   gender: 'Male' 
-// }, (err, instance) => {
-//   if (err)
-//   {
-//     console.log(err);
-//     return;
-//   }
-//   console.log('Person data saved!');
-// });
-
-
-Person.find({'name': 'Nancy'}, '', (err, person) => {
+// Save the new model instance, passing a callback
+person_instance.save(err => {
   if (err)
   {
     console.log(err);
     return;
   }
-
-  console.log(person);
+  console.log('Person data saved!');
 });
+
+// Or we can use create function
+Person.create({
+  name: 'John',
+  age: 22,
+  gender: 'Male' 
+}, (err, instance) => {
+  if (err)
+  {
+    console.log(err);
+    return;
+  }
+  console.log('Person data saved!');
+});
+
+
+// Person.find({'name': 'Nancy'}, '', (err, person) => {
+//   if (err)
+//   {
+//     console.log(err);
+//     return;
+//   }
+
+//   console.log(person);
+// });
 
 // Return an query, we can config a set of filters and then execute
 // const query = Person.find({ 'name': 'John' });
@@ -77,5 +76,7 @@ Person.find({'name': 'Nancy'}, '', (err, person) => {
 // Or
 // Person.find().where().limit().sort().exec();
 // Person.findOne();
+
+mongoose.connection.close();
 
 /* eslint-enale no-console */
