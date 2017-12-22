@@ -5,7 +5,7 @@ const BookInstance = require('../models/bookinstance');
 const async = require('async');
 
 
-function parallel(options, tasks, cb) {
+function parallel(tasks, cb, options={timeoutMS: 2000}) {
   options = options || {};
 
   if (typeof options.timeoutMS != 'number') {
@@ -28,35 +28,42 @@ function parallel(options, tasks, cb) {
 
 
 exports.index = (req, res) => {
-  parallel({timeoutMS: 2000},{
-    book_count: callback => {
-      Book.count(callback);
-    },
-    book_instance_count: callback => {
-      BookInstance.count(callback);
-    },
-    book_instance_available_count: callback => {
-      BookInstance.count({status: 'Available'}, callback);
-    },
-    author_count: callback => {
-      Author.count(callback);
-    },
-    genre_count: callback => {
-      Genre.count(callback);
-    },
-  }, (err, results) => {
-    res.render('index', { title: 'Local Library Home', error: err, data: results });
-  })
+  parallel(
+    {
+      book_count: callback => {
+        Book.count(callback);
+      },
+      book_instance_count: callback => {
+        BookInstance.count(callback);
+      },
+      book_instance_available_count: callback => {
+        BookInstance.count({status: 'Available'}, callback);
+      },
+      author_count: callback => {
+        Author.count(callback);
+      },
+      genre_count: callback => {
+        Genre.count(callback);
+      },
+    }, (err, results) => {
+      res.render('index', { title: 'Local Library Home', error: err, data: results });
+    })
 };
 
 // Display list of all books
-exports.book_list = (req, res) => {
-  res.send('NOT IMPLEMENTED: Book list');
+exports.book_list = (req, res, next) => {
+  Book.find({}, 'title author')
+    .populate('author')
+    .exec((err, list_books) => {
+      if (err) return next(err);
+
+      res.render('book_list', { title: 'Book List', book_list: list_books });
+    });
 };
 
 // Display detail page for a specific book
 exports.book_detail = (req, res) => {
-  res.send(`NOT IMPLEMENTED: Book detail: ${req.params.id}`);
+  
 };
 
 // Display book create form on GET
