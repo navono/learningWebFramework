@@ -45,7 +45,7 @@ Person.create({
     console.log(err);
     return;
   }
-  console.log('Person data saved!');
+  console.log('Person data saved!' + instance);
 });
 
 
