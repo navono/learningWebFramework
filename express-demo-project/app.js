@@ -5,12 +5,16 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
+const compression = require('compression');
+const helmet = require('helmet');
+
 
 const index = require('./routes/index');
 const users = require('./routes/users');
 const catalog = require('./routes/catalog');
 
 const app = express();
+app.use(helmet());
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
@@ -34,6 +38,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(compression()); // Add this after the bodyParser middleware!
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
