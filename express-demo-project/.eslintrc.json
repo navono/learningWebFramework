@@ -6,6 +6,10 @@
     "plugins": ["node"],
     "extends": ["eslint:recommended", "plugin:node/recommended"],
     "rules": {
-        "indent": ["error", 2]
+        "indent": ["error", 2],
+        "node/no-unpublished-require": ["error", {
+            "allowModules": [],
+            "tryExtensions": [".js", ".json", ".node"]
+        }]
     }
 }
