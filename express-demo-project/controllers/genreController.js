@@ -1,4 +1,6 @@
 const Genre = require('../models/genre');
+const Book = require('../models/book');
+const parallel = require('../public/javascripts/customParallel');
 
 // Display list of all Genre
 exports.genre_list = (req, res, next) => {
@@ -11,8 +13,31 @@ exports.genre_list = (req, res, next) => {
 };
 
 // Display detail page for a specific Genre
-exports.genre_detail = (req, res) => {
-  res.send(`NOT IMPLEMENTED: Genre detail: ${req.params.id}`);
+exports.genre_detail = (req, res, next) => {
+  parallel({
+    genre: cb => {
+      Genre.findById(req.params.id)
+        .exec(cb);
+    },
+    genre_books: cb => {
+      Book.find({ 'genre': req.params.id })
+        .exec(cb);
+    },
+  }, function (err, results) {
+    if (err) return next(err);
+    if (results.genre == null) {
+      let error = new Error('Genre not found');
+      error.status = 404;
+      return next(error);
+    }
+
+    res.render('genre_detail',
+      { 
+        title: 'Genre Detail', 
+        genre: results.genre,
+        genre_books: results.genre_books
+      });
+  });
 };
 
 // Display Genre create form on GET
