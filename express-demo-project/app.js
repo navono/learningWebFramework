@@ -18,7 +18,7 @@ app.use(helmet());
 
 //Set up mongoose connection
 const mongoose = require('mongoose');
-const dev_db_url = 'mongodb://ping:123456@localhost/mydb';
+const dev_db_url = `mongodb://mongo:27017/mydb`;
 
 const mongoDB = process.env.MONGODB_URI || dev_db_url;
 mongoose.connect(mongoDB, {

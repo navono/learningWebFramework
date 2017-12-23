@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const Person = require('./models/testModel');
 
-const mongoDB = `mongodb://ping:123456@127.0.0.1/mydb`;
+const mongoDB = `mongodb://localhost/mydb`;
 mongoose.connect(mongoDB, {
   useMongoClient: true
 });
