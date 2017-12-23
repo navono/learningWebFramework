@@ -6,17 +6,14 @@ services:
 before_script:
   - docker pull navono/express-demo || true
 script:
-  - docker build --pull --cache-from navono/express-demo --tag express-demo ./express-demo-project
-
-
+  - docker build --pull --cache-from navono/express-demo --tag navono/express-demo ./express-demo-project
 after_script:
   - docker images
-
 
 before_deploy:
   - docker login -u "$USER" -p "$PASS"
 deploy:
   provider: script
-  scirpt: docker push navono/express-demo
+  script: docker push navono/express-demo
   on:
     branch: master
