@@ -10,10 +10,16 @@ script:
 after_script:
   - docker images
 
-before_deploy:
-  - docker login -u "$USER" -p "$PASS"
-deploy:
-  provider: script
-  script: docker push navono/express-demo
-  on:
-    branch: master
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u "$USER" -p "$PASS";
+    docker push navono/express-demo;
+    fi
+    
+# before_deploy:
+#   - docker login -u "$USER" -p "$PASS"
+# deploy:
+#   provider: script
+#   script: docker push navono/express-demo
+#   on:
+#     branch: master
