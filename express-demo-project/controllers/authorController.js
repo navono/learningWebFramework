@@ -1,4 +1,7 @@
 const Author = require('../models/author');
+const Book = require('../models/book')
+const parallel = require('../public/javascripts/customParallel');
+
 
 // Dispaly list of all Authors
 exports.author_list = (req, res, next) => {
@@ -12,8 +15,31 @@ exports.author_list = (req, res, next) => {
 };
 
 // Display detail page for a specific Author
-exports.author_detail = (req, res) => {
-  res.send(`Not IMPLEMENTED: Author detail:${req.params.id}`);
+exports.author_detail = (req, res, next) => {
+  parallel({
+    author: cb => {
+      Author.findById(req.params.id)
+        .exec(cb)
+    },
+    author_books: cb => {
+      Book.find({ 'author': req.params.id }, 'title summary')
+        .exec(cb)
+    },
+  }, function (err, results) {
+    if (err) return next(err);
+
+    if (results.author == null) {
+      let error = new Error('Author not found');
+      error.status = 404;
+      return next(error);
+    }
+    res.render('author_detail', 
+      { 
+        title: 'Author Detail',
+        author: results.author,
+        author_books: results.author_books
+      });
+  });
 };
 
 // Display Author create form on GET
