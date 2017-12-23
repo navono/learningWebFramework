@@ -12,7 +12,7 @@ after_script:
 
 
 before_deploy:
-  - docker login -u ${USER} -p ${PASS}
+  - docker login -u "$USER" -p "$PASS"
 deploy:
   provider: script
   scirpt: docker push navono/express-demo
