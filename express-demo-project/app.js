@@ -13,6 +13,10 @@ const session = require('express-session');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const catalog = require('./routes/catalog');
+const author = require('./routes/author');
+const book = require('./routes/book');
+const bookinstance = require('./routes/bookinstance');
+const genre = require('./routes/genre');
 
 const app = express();
 app.use(helmet());
@@ -51,6 +55,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/catalog', catalog);
+app.use('/author', author);
+app.use('/book', book);
+app.use('/bookinstance', bookinstance);
+app.use('/genre', genre);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
