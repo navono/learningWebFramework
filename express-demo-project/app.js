@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const lessMiddleware = require('less-middleware');
 const compression = require('compression');
 const helmet = require('helmet');
+const session = require('express-session');
 
 
 const index = require('./routes/index');
@@ -42,6 +43,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({secret: "Shh, its a secret!"}));
 app.use(compression()); // Add this after the bodyParser middleware!
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
