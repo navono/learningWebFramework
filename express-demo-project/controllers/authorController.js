@@ -107,11 +107,17 @@ exports.author_delete_get = (req, res, next) => {
     }, function(err, results) {
       if (err) { return next(err); }
       if (results.author==null) {
-        // No results.
-        res.redirect('/catalog/authors');
+        let err = new Error('Author not found');
+        err.status = 404;
+        return next(err);
       }
       // Successful, so render.
-      res.render('author_delete', { title: 'Delete Author', author: results.author, author_books: results.authors_books } );
+      res.render('author_delete', 
+        {
+          title: 'Delete Author',
+          author: results.author,
+          author_books: results.authors_books
+        });
     });
 };
 
