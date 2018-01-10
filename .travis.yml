@@ -1,20 +1,20 @@
-sudo: required
+# sudo: required
 
-services:
-  - docker
+# services:
+#   - docker
 
-before_script:
-  - docker pull navono/express-demo || true
-script:
-  - docker build --pull --cache-from navono/express-demo --tag navono/express-demo ./express-demo-project
-after_script:
-  - docker images
+# before_script:
+#   - docker pull navono/express-demo || true
+# script:
+#   - docker build --pull --cache-from navono/express-demo --tag navono/express-demo ./express-demo-project
+# after_script:
+#   - docker images
 
-after_success:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker login -u "$USER" -p "$PASS";
-    docker push navono/express-demo;
-    fi
+# after_success:
+#   - if [ "$TRAVIS_BRANCH" == "koa" ]; then
+#     docker login -u "$USER" -p "$PASS";
+#     docker push navono/express-demo;
+#     fi
     
 # before_deploy:
 #   - docker login -u "$USER" -p "$PASS"

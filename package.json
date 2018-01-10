@@ -1,0 +1,12 @@
+{
+  "name": "learningWebFramework",
+  "version": "0.0.1",
+  "description": "A demo code for Koa",
+  "main": "index.js",
+  "repository": "https://github.com/navono/learningWebFramework.git",
+  "author": "Qixing Ping",
+  "license": "MIT",
+  "devDependencies": {
+    "koa": "^2.4.1"
+  }
+}
