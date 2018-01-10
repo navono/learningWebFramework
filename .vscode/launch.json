@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "debug express demo",
-      "cwd": "${workspaceFolder}/express-demo-project",
+      "cwd": "${workspaceFolder}/src",
       "runtimeExecutable": "npm",
       "runtimeArgs": [
         "run",

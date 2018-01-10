@@ -1,11 +1,11 @@
 {
-  "name": "express-demo-project",
-  "version": "0.0.0",
+  "name": "express-demo",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "debug": "nodemon --inspect-brk=9229 ./bin/www",
-    "devstart": "nodemon ./bin/www"
+    "start": "node ./src/bin/www",
+    "debug": "nodemon --inspect-brk=9229 ./src/bin/www",
+    "devstart": "nodemon ./src/bin/www"
   },
   "engines": {
     "node": ">=8.0.0"
